@@ -1,0 +1,30 @@
+name: Validate
+on:
+  push: { branches: [main] }
+  pull_request: { branches: [main] }
+jobs:
+  validate:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with: { node-version: 24 }
+      - name: Validate SKILL.md frontmatter
+        run: |
+          node -e '
+            const fs=require("fs"), path=require("path");
+            const dir="skills"; let bad=0;
+            for (const name of fs.readdirSync(dir)) {
+              const f=path.join(dir,name,"SKILL.md");
+              if(!fs.existsSync(f)){console.error("missing",f);bad++;continue;}
+              const t=fs.readFileSync(f,"utf8");
+              const m=t.match(/^---\n([\s\S]*?)\n---/);
+              if(!m){console.error("no frontmatter",f);bad++;continue;}
+              if(!/\nname:\s*\S/.test("\n"+m[1])){console.error("no name",f);bad++;}
+              if(!/\ndescription:\s*\S/.test("\n"+m[1])){console.error("no description",f);bad++;}
+            }
+            process.exit(bad?1:0);
+          '
+      - name: Validate Claude plugin + marketplace JSON
+        run: |
+          node -e 'JSON.parse(require("fs").readFileSync(".claude-plugin/plugin.json","utf8"));JSON.parse(require("fs").readFileSync(".claude-plugin/marketplace.json","utf8"));console.log("json ok")'
