@@ -78,7 +78,7 @@ architect-skills/
 
 **Files:** Create `package.json`, `LICENSE`, `.gitignore`, `CLAUDE.md`, `README.md` (stub).
 
-- [ ] **Step 1: `git init` and base files**
+- [x] **Step 1: `git init` and base files**
 
 ```bash
 cd /Users/nkranendonk/Projects/architect-skills
@@ -86,7 +86,7 @@ git init -b main
 printf 'node_modules/\n.DS_Store\n.playwright-mcp/\n*.log\n' > .gitignore
 ```
 
-- [ ] **Step 2: Write `package.json`** (metadata only — no build; `files` ships skills + manifests):
+- [x] **Step 2: Write `package.json`** (metadata only — no build; `files` ships skills + manifests):
 
 ```json
 {
@@ -105,9 +105,9 @@ printf 'node_modules/\n.DS_Store\n.playwright-mcp/\n*.log\n' > .gitignore
 }
 ```
 
-- [ ] **Step 3: Write `LICENSE`** — MIT, copyright "Architect CMS". (Copy an MIT template; year 2026.)
+- [x] **Step 3: Write `LICENSE`** — MIT, copyright "Architect CMS". (Copy an MIT template; year 2026.)
 
-- [ ] **Step 4: Write `CLAUDE.md`** (this is a public repo — same hygiene rules as architect-sdk):
+- [x] **Step 4: Write `CLAUDE.md`** (this is a public repo — same hygiene rules as architect-sdk):
 
 ```markdown
 # architect-skills
@@ -126,7 +126,7 @@ This repository is PUBLIC; its full git history is visible. Never commit:
 - Conventional Commits. Keep `marketplace.json`/`plugin.json` versions in sync with releases.
 ```
 
-- [ ] **Step 5: Commit**
+- [x] **Step 5: Commit**
 
 ```bash
 git add -A && git commit -m "chore: scaffold architect-skills repo"
@@ -134,14 +134,14 @@ git add -A && git commit -m "chore: scaffold architect-skills repo"
 
 ### Task 0.2: Create the GitHub repo and push
 
-- [ ] **Step 1: Create the public repo and push** (gh is authed):
+- [x] **Step 1: Create the public repo and push** (gh is authed):
 
 ```bash
 gh repo create architectcms/architect-skills --public --source=. --remote=origin --description "Agent Skills for managing Architect CMS via the architect CLI" --push
 ```
 Expected: repo created at `github.com/architectcms/architect-skills`, `main` pushed.
 
-- [ ] **Step 2: Confirm** `gh repo view architectcms/architect-skills --json visibility -q .visibility` → `PUBLIC`.
+- [x] **Step 2: Confirm** `gh repo view architectcms/architect-skills --json visibility -q .visibility` → `PUBLIC`.
 
 ---
 
@@ -155,7 +155,7 @@ Expected: repo created at `github.com/architectcms/architect-skills`, `main` pus
 
 The single biggest simplification: the old `setup` skill did `curl` register/login/key-mint + wrote `~/.architect/config.json`+`config.local.json` by hand. The CLI replaces all of it with `architect login`.
 
-- [ ] **Step 1: Write `skills/architect-setup/SKILL.md`:**
+- [x] **Step 1: Write `skills/architect-setup/SKILL.md`:**
 
 ```markdown
 ---
@@ -202,7 +202,7 @@ If `whoami` says "Not logged in", run `architect login` again.
 - `architect-entries` — create/update content
 ```
 
-- [ ] **Step 2: Commit** (`feat: architect-setup skill`).
+- [x] **Step 2: Commit** (`feat: architect-setup skill`).
 
 ### Task 1.2: `architect-models` skill
 
@@ -210,7 +210,7 @@ If `whoami` says "Not logged in", run `architect login` again.
 
 curl→CLI mapping: list/get → `architect models pull`; create/update → edit the pulled JSON and `architect models push <file>`. Context **models** are created here too (a model with `isContextModel: true` and a `keyField`).
 
-- [ ] **Step 1: Write `skills/architect-models/SKILL.md`:**
+- [x] **Step 1: Write `skills/architect-models/SKILL.md`:**
 
 ```markdown
 ---
@@ -267,8 +267,8 @@ See `references/field-types.md` for every field type (`text`, `richtext`, `numbe
 - `architect-entries`, `architect-context`, `architect-types`
 ```
 
-- [ ] **Step 2: Write `references/field-types.md`** — port the field-type table from `/Users/nkranendonk/Projects/architect/skills/models/references/field-types.md`, but present each as a JSON field object (not a curl body). Keep the canonical `type` enum: `text, richtext, textarea, email, url, string, model, relation, file, image, number, boolean, date, json, array, key, select`.
-- [ ] **Step 3: Commit** (`feat: architect-models skill`).
+- [x] **Step 2: Write `references/field-types.md`** — port the field-type table from `/Users/nkranendonk/Projects/architect/skills/models/references/field-types.md`, but present each as a JSON field object (not a curl body). Keep the canonical `type` enum: `text, richtext, textarea, email, url, string, model, relation, file, image, number, boolean, date, json, array, key, select`.
+- [x] **Step 3: Commit** (`feat: architect-models skill`).
 
 ### Task 1.3: `architect-entries` skill
 
@@ -276,7 +276,7 @@ See `references/field-types.md` for every field type (`text`, `richtext`, `numbe
 
 curl→CLI mapping: list/fetch → `architect entries pull --model <name>`; create/update → `architect entries push --model <name> <file>` (entries with an `id` update; without create).
 
-- [ ] **Step 1: Write `skills/architect-entries/SKILL.md`:**
+- [x] **Step 1: Write `skills/architect-entries/SKILL.md`:**
 
 ```markdown
 ---
@@ -326,14 +326,14 @@ For a single `model`-type relation, set the field to the target entry id; for a 
 - `architect-models`, `architect-context` (locale/segment-aware content)
 ```
 
-- [ ] **Step 2: Write `references/query-syntax.md`** — port from `/Users/nkranendonk/Projects/architect/skills/entries/references/query-syntax.md` (filter operators, `resolveRelations`), framed as notes on what `entries pull` returns.
-- [ ] **Step 3: Commit** (`feat: architect-entries skill`).
+- [x] **Step 2: Write `references/query-syntax.md`** — port from `/Users/nkranendonk/Projects/architect/skills/entries/references/query-syntax.md` (filter operators, `resolveRelations`), framed as notes on what `entries pull` returns.
+- [x] **Step 3: Commit** (`feat: architect-entries skill`).
 
 ### Task 1.4: `architect-types` skill
 
 **Files:** Create `skills/architect-types/SKILL.md`.
 
-- [ ] **Step 1: Write `skills/architect-types/SKILL.md`:**
+- [x] **Step 1: Write `skills/architect-types/SKILL.md`:**
 
 ```markdown
 ---
@@ -363,7 +363,7 @@ This fetches every model in the current environment and writes one `export inter
 - `architect-models`
 ```
 
-- [ ] **Step 2: Commit** (`feat: architect-types skill`).
+- [x] **Step 2: Commit** (`feat: architect-types skill`).
 
 ### Task 1.5: `architect-localization` skill
 
@@ -371,9 +371,9 @@ This fetches every model in the current environment and writes one `export inter
 
 Uses `architect init --config` (available today) to scaffold a Locale context model + locale entries + a Localization context provider.
 
-- [ ] **Step 1: Copy the example config** from `/Users/nkranendonk/Projects/architect-sdk/packages/cli/examples/init.fr-en.json` to `skills/architect-localization/examples/init.fr-en.json`.
+- [x] **Step 1: Copy the example config** from `/Users/nkranendonk/Projects/architect-sdk/packages/cli/examples/init.fr-en.json` to `skills/architect-localization/examples/init.fr-en.json`.
 
-- [ ] **Step 2: Write `skills/architect-localization/SKILL.md`:**
+- [x] **Step 2: Write `skills/architect-localization/SKILL.md`:**
 
 ```markdown
 ---
@@ -424,13 +424,13 @@ With `hierarchy: true`, a region like `fr-FR` falls back to its base language `f
 - `architect-context` (general context providers), `architect-models`
 ```
 
-- [ ] **Step 3: Commit** (`feat: architect-localization skill`).
+- [x] **Step 3: Commit** (`feat: architect-localization skill`).
 
 ### Task 1.6: Wire the Claude plugin + marketplace manifests (ship-now skills)
 
 **Files:** Create `.claude-plugin/plugin.json`, `.claude-plugin/marketplace.json`.
 
-- [ ] **Step 1: Write `.claude-plugin/plugin.json`:**
+- [x] **Step 1: Write `.claude-plugin/plugin.json`:**
 
 ```json
 {
@@ -446,7 +446,7 @@ With `hierarchy: true`, a region like `fr-FR` falls back to its base language `f
 ```
 (Skills are auto-discovered from the root `skills/` directory; the plugin's skills path defaults to `skills`.)
 
-- [ ] **Step 2: Write `.claude-plugin/marketplace.json`:**
+- [x] **Step 2: Write `.claude-plugin/marketplace.json`:**
 
 ```json
 {
@@ -466,14 +466,14 @@ With `hierarchy: true`, a region like `fr-FR` falls back to its base language `f
 }
 ```
 
-- [ ] **Step 3: Validate the plugin/marketplace** (Claude Code CLI):
+- [x] **Step 3: Validate the plugin/marketplace** (Claude Code CLI):
 
 ```bash
 claude plugin validate .
 ```
 Expected: validates `plugin.json`, `marketplace.json`, and each `SKILL.md` frontmatter with no errors. Fix any frontmatter issues it reports (missing `name`/`description`, description > 1,536 chars).
 
-- [ ] **Step 4: Live install test** in a throwaway dir:
+- [x] **Step 4: Live install test** in a throwaway dir:
 
 ```bash
 claude plugin marketplace add architectcms/architect-skills
@@ -481,7 +481,7 @@ claude plugin install architect-cms@architect-skills
 claude plugin list   # architect-cms shows installed; skills appear as /architect-cms:architect-models etc.
 ```
 
-- [ ] **Step 5: Commit** (`feat: claude plugin + marketplace manifests`).
+- [x] **Step 5: Commit** (`feat: claude plugin + marketplace manifests`).
 
 ---
 
@@ -491,7 +491,7 @@ claude plugin list   # architect-cms shows installed; skills appear as /architec
 
 **Files:** Create `README.md`.
 
-- [ ] **Step 1: Write `README.md`** covering all four install paths (these are the verified commands):
+- [x] **Step 1: Write `README.md`** covering all four install paths (these are the verified commands):
 
 ````markdown
 # Architect CMS — Agent Skills
@@ -541,13 +541,13 @@ Copy a `skills/<name>/` folder into your agent's skills directory (`.claude/skil
 MIT
 ````
 
-- [ ] **Step 2: Commit** (`docs: multi-platform install readme`).
+- [x] **Step 2: Commit** (`docs: multi-platform install readme`).
 
 ### Task 2.2: CI validation of skills + manifests
 
 **Files:** Create `.github/workflows/validate.yml`.
 
-- [ ] **Step 1: Write `.github/workflows/validate.yml`** — fail the build if any `SKILL.md` lacks frontmatter `name`/`description`, or if the plugin/marketplace JSON is invalid:
+- [x] **Step 1: Write `.github/workflows/validate.yml`** — fail the build if any `SKILL.md` lacks frontmatter `name`/`description`, or if the plugin/marketplace JSON is invalid:
 
 ```yaml
 name: Validate
@@ -582,7 +582,7 @@ jobs:
           node -e 'JSON.parse(require("fs").readFileSync(".claude-plugin/plugin.json","utf8"));JSON.parse(require("fs").readFileSync(".claude-plugin/marketplace.json","utf8"));console.log("json ok")'
 ```
 
-- [ ] **Step 2: Commit + push; confirm the workflow is green** (`gh run list --limit 1`).
+- [x] **Step 2: Commit + push; confirm the workflow is green** (`gh run list --limit 1`).
 
 ---
 
@@ -590,17 +590,17 @@ jobs:
 
 ### Task 3.1: Tag a release and register on skills.sh
 
-- [ ] **Step 1: Tag `v0.1.0`** so installers can pin:
+- [x] **Step 1: Tag `v0.1.0`** so installers can pin:
 ```bash
 git tag v0.1.0 && git push origin v0.1.0
 ```
-- [ ] **Step 2: Verify skills.sh installability** (no submission form needed — GitHub *is* the registry; listing follows install telemetry):
+- [x] **Step 2: Verify skills.sh installability** (no submission form needed — GitHub *is* the registry; listing follows install telemetry):
 ```bash
 npx skills add architectcms/architect-skills --all   # in a scratch dir; confirms discovery of skills/<name>/SKILL.md
 ```
 Expected: the installer lists all `architect-*` skills and installs the selected ones. If it finds nothing, the layout is wrong (skills must be at `skills/<name>/SKILL.md`).
 - [ ] **Step 3 (optional): npm publish** `@architectcms/skills` for an additional install channel (`npm publish` from the repo; `files` already scopes the tarball). Add a changeset-free manual publish or reuse the org's Trusted Publishing pattern.
-- [ ] **Step 4: Commit** any doc tweaks (`chore: v0.1.0 release`).
+- [x] **Step 4: Commit** any doc tweaks (`chore: v0.1.0 release`).
 
 ---
 
@@ -614,7 +614,7 @@ Expected: the installer lists all `architect-*` skills and installs the selected
 
 curl→CLI mapping: `/api/context-providers` GET → `architect contexts list`/`pull`; POST/PUT → `architect contexts push <file>`.
 
-- [ ] **Step 1: Write `skills/architect-context/SKILL.md`:**
+- [x] **Step 1: Write `skills/architect-context/SKILL.md`:**
 
 ```markdown
 ---
@@ -668,14 +668,14 @@ See `references/strategies.md` for segmentation patterns.
 - `architect-models`, `architect-localization`, `architect-context-actions`
 ```
 
-- [ ] **Step 2: Write `references/strategies.md`** — port segmentation strategies from `/Users/nkranendonk/Projects/architect/skills/context/references/strategies.md`, reframed as `contexts push` provider JSON.
-- [ ] **Step 3: Commit** (`feat: architect-context skill`).
+- [x] **Step 2: Write `references/strategies.md`** — port segmentation strategies from `/Users/nkranendonk/Projects/architect/skills/context/references/strategies.md`, reframed as `contexts push` provider JSON.
+- [x] **Step 3: Commit** (`feat: architect-context skill`).
 
 ### Task 4.2: `architect-context-actions` skill
 
 **Files:** Create `skills/architect-context-actions/SKILL.md`.
 
-- [ ] **Step 1: Write `skills/architect-context-actions/SKILL.md`:**
+- [x] **Step 1: Write `skills/architect-context-actions/SKILL.md`:**
 
 ```markdown
 ---
@@ -703,13 +703,13 @@ architect context-actions run <actionId> --param entryId=<id> --param locale=fr
 - `architect-context`, `architect-entries`
 ```
 
-- [ ] **Step 2: Commit** (`feat: architect-context-actions skill`).
+- [x] **Step 2: Commit** (`feat: architect-context-actions skill`).
 
 ### Task 4.3: `architect-lifecycle` skill
 
 **Files:** Create `skills/architect-lifecycle/SKILL.md`, `skills/architect-lifecycle/references/examples.md`.
 
-- [ ] **Step 1: Write `skills/architect-lifecycle/SKILL.md`:**
+- [x] **Step 1: Write `skills/architect-lifecycle/SKILL.md`:**
 
 ```markdown
 ---
@@ -751,14 +751,14 @@ See `references/examples.md` for more handlers (validation, denormalization, tim
 - `architect-models`, `architect-entries`
 ```
 
-- [ ] **Step 2: Write `references/examples.md`** — port from `/Users/nkranendonk/Projects/architect/skills/lifecycle/references/examples.md`, each example as a `--code-file` snippet.
-- [ ] **Step 3: Commit** (`feat: architect-lifecycle skill`).
+- [x] **Step 2: Write `references/examples.md`** — port from `/Users/nkranendonk/Projects/architect/skills/lifecycle/references/examples.md`, each example as a `--code-file` snippet.
+- [x] **Step 3: Commit** (`feat: architect-lifecycle skill`).
 
 ### Task 4.4: `architect-webhooks` skill
 
 **Files:** Create `skills/architect-webhooks/SKILL.md`.
 
-- [ ] **Step 1: Write `skills/architect-webhooks/SKILL.md`:**
+- [x] **Step 1: Write `skills/architect-webhooks/SKILL.md`:**
 
 ```markdown
 ---
@@ -795,13 +795,13 @@ architect webhooks rm <webhookId>
 - `architect-entries`, `architect-env`
 ```
 
-- [ ] **Step 2: Commit** (`feat: architect-webhooks skill`).
+- [x] **Step 2: Commit** (`feat: architect-webhooks skill`).
 
 ### Task 4.5: `architect-env` skill
 
 **Files:** Create `skills/architect-env/SKILL.md`.
 
-- [ ] **Step 1: Write `skills/architect-env/SKILL.md`:**
+- [x] **Step 1: Write `skills/architect-env/SKILL.md`:**
 
 ```markdown
 ---
@@ -831,15 +831,15 @@ The CLI operates against the environment you logged in with. To target another e
 - `architect-setup`, `architect-models`
 ```
 
-- [ ] **Step 2: Commit** (`feat: architect-env skill`).
+- [x] **Step 2: Commit** (`feat: architect-env skill`).
 
 ### Task 4.6: Update manifests + README for the new skills, validate, release
 
-- [ ] **Step 1: Bump versions** in `.claude-plugin/plugin.json` and `.claude-plugin/marketplace.json` to `0.2.0`; bump `package.json` to `0.2.0`. (Skills auto-discover, so no per-skill manifest entry needed.)
-- [ ] **Step 2: Update README** minimum CLI version to the published companion-plan CLI release.
-- [ ] **Step 3: Validate** (`claude plugin validate .`) and run the CI validator locally (the node frontmatter check from Task 2.2).
-- [ ] **Step 4: Live test** each new skill end-to-end against a real env via Claude Code (install the updated plugin, invoke `/architect-cms:architect-lifecycle`, etc., and confirm the `architect` commands it runs succeed).
-- [ ] **Step 5: Tag `v0.2.0`, push, verify `npx skills add architectcms/architect-skills --all` lists all ten skills.** Commit (`chore: v0.2.0 — context/lifecycle/webhooks/env skills`).
+- [x] **Step 1: Bump versions** in `.claude-plugin/plugin.json` and `.claude-plugin/marketplace.json` to `0.2.0`; bump `package.json` to `0.2.0`. (Skills auto-discover, so no per-skill manifest entry needed.)
+- [x] **Step 2: Update README** minimum CLI version to the published companion-plan CLI release.
+- [x] **Step 3: Validate** (`claude plugin validate .`) and run the CI validator locally (the node frontmatter check from Task 2.2).
+- [x] **Step 4: Live test** each new skill end-to-end against a real env via Claude Code (install the updated plugin, invoke `/architect-cms:architect-lifecycle`, etc., and confirm the `architect` commands it runs succeed).
+- [x] **Step 5: Tag `v0.2.0`, push, verify `npx skills add architectcms/architect-skills --all` lists all ten skills.** Commit (`chore: v0.2.0 — context/lifecycle/webhooks/env skills`).
 
 ---
 
