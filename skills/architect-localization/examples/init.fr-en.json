@@ -1,0 +1,25 @@
+{
+  "starterModels": [
+    {
+      "name": "Article",
+      "displayName": "Article",
+      "description": "A localized marketing article",
+      "fields": [
+        { "name": "title", "type": "text", "required": true },
+        { "name": "body", "type": "richtext" }
+      ]
+    }
+  ],
+  "localization": {
+    "enabled": true,
+    "modelName": "Locale",
+    "providerName": "Localization",
+    "locales": [
+      { "code": "en-US", "name": "English (US)" },
+      { "code": "fr-FR", "name": "French (France)" }
+    ],
+    "defaultLocale": "en",
+    "hierarchy": true
+  },
+  "bundles": []
+}
