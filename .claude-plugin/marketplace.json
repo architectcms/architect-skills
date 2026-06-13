@@ -1,0 +1,15 @@
+{
+  "$schema": "https://code.claude.com/schemas/marketplace-v1.json",
+  "name": "architect-skills",
+  "description": "Agent Skills for managing Architect CMS via the architect CLI.",
+  "owner": { "name": "Architect CMS" },
+  "plugins": [
+    {
+      "name": "architect-cms",
+      "source": ".",
+      "description": "Models, entries, types, localization, context, lifecycle, webhooks, and environments for Architect CMS.",
+      "version": "0.1.0",
+      "license": "MIT"
+    }
+  ]
+}
