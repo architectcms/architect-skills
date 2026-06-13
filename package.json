@@ -1,0 +1,14 @@
+{
+  "name": "@architectcms/skills",
+  "version": "0.1.0",
+  "description": "Agent Skills for managing Architect CMS through the architect CLI (Claude, Codex, Cursor, and more).",
+  "license": "MIT",
+  "type": "module",
+  "private": false,
+  "keywords": ["architect", "architectcms", "cms", "agent-skills", "claude", "codex", "skills", "headless"],
+  "repository": { "type": "git", "url": "git+https://github.com/architectcms/architect-skills.git" },
+  "homepage": "https://github.com/architectcms/architect-skills#readme",
+  "bugs": "https://github.com/architectcms/architect-skills/issues",
+  "files": [".claude-plugin", "skills", "README.md", "LICENSE"],
+  "publishConfig": { "access": "public" }
+}
