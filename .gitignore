@@ -2,3 +2,8 @@ node_modules/
 .DS_Store
 .playwright-mcp/
 *.log
+
+# `npx skills add` install artifacts (do not commit if run inside this repo)
+.agents/skills/
+.claude/
+skills-lock.json

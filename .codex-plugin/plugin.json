@@ -1,0 +1,19 @@
+{
+  "name": "architect-cms",
+  "version": "0.2.0",
+  "description": "Manage Architect CMS from Codex — models, entries, types, localization, context, lifecycle, webhooks, and environments via the architect CLI.",
+  "author": { "name": "Architect CMS" },
+  "homepage": "https://github.com/architectcms/architect-skills",
+  "repository": "https://github.com/architectcms/architect-skills",
+  "license": "MIT",
+  "keywords": ["architect", "cms", "content", "headless"],
+  "skills": "./skills/",
+  "interface": {
+    "displayName": "Architect CMS",
+    "shortDescription": "CLI-driven skills for managing Architect CMS.",
+    "longDescription": "Models, entries, types, localization, context providers, lifecycle functions, webhooks, and environments for Architect CMS — driven through the architect CLI.",
+    "developerName": "Architect CMS",
+    "category": "Productivity",
+    "websiteURL": "https://architectcms.com"
+  }
+}

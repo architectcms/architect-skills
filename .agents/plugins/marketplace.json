@@ -1,0 +1,22 @@
+{
+  "name": "architect-skills",
+  "interface": {
+    "displayName": "Architect CMS Skills"
+  },
+  "plugins": [
+    {
+      "name": "architect-cms",
+      "source": {
+        "source": "git-subdir",
+        "url": "https://github.com/architectcms/architect-skills.git",
+        "path": ".",
+        "ref": "main"
+      },
+      "policy": {
+        "installation": "AVAILABLE",
+        "authentication": "ON_INSTALL"
+      },
+      "category": "Productivity"
+    }
+  ]
+}

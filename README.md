@@ -13,13 +13,13 @@ CLI-driven [Agent Skills](https://agentskills.io) that let Claude, Codex, Cursor
 /plugin install architect-cms@architect-skills
 ```
 
-### Codex
+### Codex (plugin marketplace)
 
 ```
-$skill-installer install https://github.com/architectcms/architect-skills/tree/main/skills/architect-models
+codex plugin marketplace add architectcms/architect-skills
 ```
 
-(repeat per skill; restart Codex to pick them up)
+Then install the `architect-cms` plugin from `/plugins` (or `codex plugin marketplace list`). One install pulls in all the skills; restart Codex to pick them up.
 
 ### Cursor / Windsurf / others (skills.sh installer)
 
