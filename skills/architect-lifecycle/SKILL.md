@@ -58,7 +58,7 @@ architect lifecycle rm <functionId>
 
 Get the id from `lifecycle list`.
 
-See `references/examples.md` for more handlers (validation, denormalization, timestamps, delete guards).
+See `references/examples.md` for more handlers (validation, denormalization, timestamps, delete guards), and `references/execution-model.md` for the sandbox runtime: the `services` object (`http`/`entries`/`log`/`kv`), execution limits, retry/idempotency semantics, and error types.
 
 ## Related skills
 
