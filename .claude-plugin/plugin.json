@@ -1,7 +1,7 @@
 {
   "name": "architect-cms",
   "description": "Manage Architect CMS from your terminal agent — models, entries, types, localization, context, lifecycle, webhooks, and environments via the architect CLI.",
-  "version": "0.1.0",
+  "version": "0.2.0",
   "author": { "name": "Architect CMS" },
   "homepage": "https://github.com/architectcms/architect-skills",
   "repository": "https://github.com/architectcms/architect-skills",

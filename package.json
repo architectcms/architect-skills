@@ -1,6 +1,6 @@
 {
   "name": "@architectcms/skills",
-  "version": "0.1.0",
+  "version": "0.2.0",
   "description": "Agent Skills for managing Architect CMS through the architect CLI (Claude, Codex, Cursor, and more).",
   "license": "MIT",
   "type": "module",
