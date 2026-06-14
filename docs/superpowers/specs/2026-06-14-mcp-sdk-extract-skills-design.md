@@ -97,6 +97,10 @@ and wires it in.
 - Wire **one representative spot** end-to-end as a copyable pattern (e.g. render a fetched entry in a
   page/component), using **propose → confirm before editing the user's components**. The user extends
   the rest from the pattern.
+  - **Escalation:** if the user's prompt explicitly asks to replace *all* the hard-coded content
+    (not just set up the SDK), do the full wire-up — find every hard-coded spot that maps to CMS
+    content and convert it to SDK calls — still **propose → confirm before editing**. Default stays
+    the single-example pattern when the ask is just "set up the SDK."
 - Use `withContext`, image transforms, and preview-vs-delivery selection where relevant, pulled from
   the SDK README.
 
