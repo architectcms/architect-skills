@@ -42,6 +42,7 @@ server. We want to:
 |---|----------|
 | 1 | **MCP = local stdio, bundled in the plugin.** The `architect-cms` plugin ships a `.mcp.json` running `npx -y @architectcms/mcp`. The skill documents the remote `type:http` config as a drop-in for a future hosted endpoint. **This depends on publishing the server to public npm (see decision #6) — until then the skill is non-functional for external users.** |
 | 6 | **Publish the MCP server to public npm.** Today it lives in the **private** `architect` repo (`services/mcp`, scope `@architect-cms/mcp`) and is unpublished, so no external user can install it. Move it to **`architect-sdk/packages/mcp`**, rename the scope to **`@architectcms/mcp`** (matching `cli`/`sdk`), wire it into the monorepo build/publish pipeline, and publish. Cross-repo prep (move + config) is in scope for this work; the actual `npm publish` is a manual step the maintainer runs. |
+| 7 | **Add `architect assets upload` to the CLI.** The CLI has no asset command; only the SDK's management client can upload (`POST /api/v2/assets/upload`). Add a thin CLI command in `architect-sdk/packages/cli` wrapping that capability, so `architect-extract` (and future skills) can upload assets while staying CLI-driven. Published with the CLI; same cross-repo + manual-publish caveat as #6. |
 | 2 | **One `architect-sdk` skill** covering install + delivery and/or preview client scaffold + example `.env`. No separate delivery/preview skills (same package). |
 | 3 | **MCP-awareness via a shared reference.** A single `references/mcp-equivalents.md` maps CLI commands → MCP tools. Each of the 10 existing skills gets a **one-line pointer** to it. |
 | 4 | **`architect-extract` is propose → confirm → apply.** Scan, write proposed model + entry JSON locally for review, push only after approval. Never auto-mutates the CMS. |
@@ -107,14 +108,24 @@ and wires it in.
 
 ### New: `architect-extract`
 Analyze a project for hard-coded content and migrate it into the CMS. **propose → confirm → apply.**
-1. **Scan** source for hard-coded UI strings and asset references (images, etc.).
+
+**0. Scope prompt (first).** Before scanning, ask the user **how much content** to pull out of the
+app — they drive the breadth. Cover:
+  - **Breadth:** a single file/component → a directory/feature → the whole app.
+  - **Content kinds:** UI strings only, or strings **+ assets** (assets are **optional**, default off
+    unless the user opts in).
+Use these answers to bound the scan.
+
+1. **Scan** the chosen scope for hard-coded UI strings and (if opted in) asset references (images, etc.).
 2. **Propose models** inferred from the patterns; write definitions to local JSON.
 3. **Propose entries**; write entry JSON locally.
 4. **User reviews/edits** the proposed files.
-5. **Apply** only on approval: push models (via `architect-models` flow), then entries
-   (via `architect-entries` flow); optionally upload assets.
-- Defers to `architect-models` / `architect-entries` for the actual push mechanics rather than
-  duplicating them. MCP-aware via the shared reference.
+5. **Apply** only on approval:
+   - push models (via `architect-models` flow), then entries (via `architect-entries` flow);
+   - if assets were opted in, upload them via the new `architect assets upload` CLI command
+     (decision #7) and reference the resulting asset ids in the entry JSON.
+- Defers to `architect-models` / `architect-entries` for push mechanics rather than duplicating them.
+  MCP-aware via the shared reference.
 
 ### Changed: `architect-setup`
 - Remains the entry point. Add pointers to `architect-sdk` and `architect-mcp`.
@@ -137,7 +148,9 @@ This work spans three repos; the implementation plan must sequence them:
 
 - **`architect-sdk`** — add `packages/mcp` (moved from `architect/services/mcp`), rename scope to
   `@architectcms/mcp`, align `package.json` (version, `bin`/`main`, `files`, `publishConfig: public`),
-  and add it to the monorepo build/publish pipeline alongside `cli` and `sdk`.
+  and add it to the monorepo build/publish pipeline alongside `cli` and `sdk`. **Also add an
+  `architect assets upload` command to `packages/cli`** (decision #7), wrapping the SDK's existing
+  `management-assets` upload.
 - **`architect` (private)** — remove/deprecate `services/mcp` and update the root `npm run mcp` script
   to consume the published package (or point at the new monorepo location for local dev). Source of
   truth becomes `architect-sdk`.
@@ -159,5 +172,4 @@ Codex plugin manifest. Conventional Commits per skill.
 
 ## Open questions
 
-- `architect-extract` asset upload: confirm the CLI supports asset upload, or scope extract to
-  strings + asset *references* first and add asset upload as a follow-up.
+- None outstanding.
