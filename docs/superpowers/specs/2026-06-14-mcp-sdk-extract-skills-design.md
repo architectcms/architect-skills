@@ -40,7 +40,8 @@ server. We want to:
 
 | # | Decision |
 |---|----------|
-| 1 | **MCP = local stdio, bundled in the plugin.** The `architect-cms` plugin ships a `.mcp.json` running `npx -y @architectcms/mcp`. The skill documents the remote `type:http` config as a drop-in for a future hosted endpoint. **Prerequisite (out of repo):** publish the server to npm as `@architectcms/mcp` (consistent scope) from the `architect-sdk` monorepo. |
+| 1 | **MCP = local stdio, bundled in the plugin.** The `architect-cms` plugin ships a `.mcp.json` running `npx -y @architectcms/mcp`. The skill documents the remote `type:http` config as a drop-in for a future hosted endpoint. **This depends on publishing the server to public npm (see decision #6) — until then the skill is non-functional for external users.** |
+| 6 | **Publish the MCP server to public npm.** Today it lives in the **private** `architect` repo (`services/mcp`, scope `@architect-cms/mcp`) and is unpublished, so no external user can install it. Move it to **`architect-sdk/packages/mcp`**, rename the scope to **`@architectcms/mcp`** (matching `cli`/`sdk`), wire it into the monorepo build/publish pipeline, and publish. Cross-repo prep (move + config) is in scope for this work; the actual `npm publish` is a manual step the maintainer runs. |
 | 2 | **One `architect-sdk` skill** covering install + delivery and/or preview client scaffold + example `.env`. No separate delivery/preview skills (same package). |
 | 3 | **MCP-awareness via a shared reference.** A single `references/mcp-equivalents.md` maps CLI commands → MCP tools. Each of the 10 existing skills gets a **one-line pointer** to it. |
 | 4 | **`architect-extract` is propose → confirm → apply.** Scan, write proposed model + entry JSON locally for review, push only after approval. Never auto-mutates the CMS. |
@@ -130,12 +131,26 @@ Analyze a project for hard-coded content and migrate it into the CMS. **propose 
   > *Prefer the CLI. If the Architect MCP server is installed (`architect-mcp`), the equivalent
   > tools are in `references/mcp-equivalents.md`.*
 
+## Cross-repo work (publishing the MCP server — decision #6)
+
+This work spans three repos; the implementation plan must sequence them:
+
+- **`architect-sdk`** — add `packages/mcp` (moved from `architect/services/mcp`), rename scope to
+  `@architectcms/mcp`, align `package.json` (version, `bin`/`main`, `files`, `publishConfig: public`),
+  and add it to the monorepo build/publish pipeline alongside `cli` and `sdk`.
+- **`architect` (private)** — remove/deprecate `services/mcp` and update the root `npm run mcp` script
+  to consume the published package (or point at the new monorepo location for local dev). Source of
+  truth becomes `architect-sdk`.
+- **`architect-skills` (this repo)** — the skills, the plugin `.mcp.json`, and the retrofit reference.
+
+The actual `npm publish` is a **manual maintainer step**, not automated by this work.
+
 ## Out of scope / dependencies
 
-- **Publishing `@architectcms/mcp` to npm** — required for decision #1; done in the `architect-sdk`
-  monorepo, not this repo. Until then the skill can fall back to documenting the local path.
+- **Running `npm publish`** for `@architectcms/mcp` — prepped here, executed by the maintainer.
+  `architect-mcp` is non-functional for external users until this happens.
 - **Hosted/remote MCP endpoint** — future backend work; only documented as a drop-in here.
-- No changes to the CLI or SDK source themselves.
+- No changes to the CLI or SDK *source* themselves (only `architect-sdk` packaging/pipeline config).
 
 ## Versioning
 
@@ -144,6 +159,5 @@ Codex plugin manifest. Conventional Commits per skill.
 
 ## Open questions
 
-- Exact npm name once published — assume `@architectcms/mcp`; confirm at publish time.
 - `architect-extract` asset upload: confirm the CLI supports asset upload, or scope extract to
   strings + asset *references* first and add asset upload as a follow-up.
