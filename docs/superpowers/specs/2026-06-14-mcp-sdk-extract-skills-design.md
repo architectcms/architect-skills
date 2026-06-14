@@ -62,14 +62,19 @@ not a blocker.
 
 ### New: `architect-mcp`
 Install/configure the Architect MCP server.
-- **Primary (local):** write/merge a project `.mcp.json` entry that runs `npx -y @architectcms/mcp`
-  with `ARCHITECT_URL`, `ARCHITECT_API_KEY` (management), `ARCHITECT_ORG_ID`, `ARCHITECT_ENV_ID`.
-- Cover Claude Code (`.mcp.json`), Claude Desktop (`claude_desktop_config.json`), and a generic
-  client note.
+- **Plugin-bundled (primary):** the `architect-cms` plugin declares the server in
+  `.claude-plugin/plugin.json` via `mcpServers` (pointing at a repo-root `.mcp.json`) and a
+  `userConfig` block. Claude Code **prompts the user for the key/org/env at enable time** and
+  substitutes them as `${user_config.*}` — no committed secret, no hand-edited JSON. The `.mcp.json`
+  runs `npx -y @architectcms/mcp` with `ARCHITECT_URL`/`ARCHITECT_API_KEY`/`ARCHITECT_ORG_ID`/
+  `ARCHITECT_ENV_ID` wired from userConfig. (Verified against the Claude Code plugins reference.)
+- **Manual (for non-plugin contexts — Codex, other clients):** the skill walks the user through
+  writing a project `.mcp.json` / `claude_desktop_config.json` entry that runs `npx -y @architectcms/mcp`
+  with the same env vars.
 - **Remote drop-in:** documented `type:http` block for `https://mcp.architectcms.com` (when it exists).
 - Explain the relationship to the CLI (CLI preferred for scripting/CI; MCP for in-agent CRUD) and
-  link to `references/mcp-equivalents.md`.
-- Security: never commit `.mcp.json` containing a real key; use env var interpolation / placeholders.
+  link to the shared MCP-equivalents reference.
+- Security: never commit a real key; use `userConfig` (sensitive) / env interpolation / placeholders.
 
 ### New: `architect-sdk`
 Set up `@architectcms/sdk` in the user's app **and pull content into it**. This is the inverse of
@@ -137,10 +142,12 @@ Use these answers to bound the scan.
   | SDK (delivery/preview) | `arch_delivery_…` / `arch_preview_…` | project `.env` |
 
 ### Changed: existing 10 skills (MCP retrofit)
-- Add `references/mcp-equivalents.md` (CLI command → MCP tool mapping) at the plugin root references.
+- Add the canonical `mcp-equivalents.md` (CLI command → MCP tool mapping) inside the **architect-mcp**
+  skill (`skills/architect-mcp/references/mcp-equivalents.md`) so it ships with the skills to every
+  distribution (Claude plugin, Codex, npx) — the Codex manifest only bundles `./skills/`.
 - Add a one-line pointer to each skill, e.g.:
-  > *Prefer the CLI. If the Architect MCP server is installed (`architect-mcp`), the equivalent
-  > tools are in `references/mcp-equivalents.md`.*
+  > *Prefer the CLI. If the Architect MCP server is installed (see the `architect-mcp` skill), the
+  > equivalent tools are in `architect-mcp/references/mcp-equivalents.md`.*
 
 ## Cross-repo work (publishing the MCP server — decision #6)
 
