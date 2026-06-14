@@ -13,7 +13,8 @@ server. We want to:
    **Architect MCP server** installed.
 2. Make the MCP server installable from this plugin (today it is unpublished and lives only
    in `../architect/services/mcp`).
-3. Add app-side skills for the **SDK** (delivery + preview clients) including an example `.env`.
+3. Add an app-side skill for the **SDK** (delivery + preview clients) — install, example `.env`, and
+   **fetching content from the CMS and wiring it into the app**.
 4. Add a skill that analyzes a project for hard-coded strings/assets, models them, and uploads
    them to the CMS.
 5. Make `architect-setup` the clear entry point and document **where each kind of API key goes**.
@@ -69,7 +70,11 @@ Install/configure the Architect MCP server.
 - Security: never commit `.mcp.json` containing a real key; use env var interpolation / placeholders.
 
 ### New: `architect-sdk`
-Set up `@architectcms/sdk` in the user's app.
+Set up `@architectcms/sdk` in the user's app **and pull content into it**. This is the inverse of
+`architect-extract`: extract pushes hard-coded content *up* to the CMS; this skill pulls it *down*
+and wires it in.
+
+**1. Install + configure**
 - `npm install @architectcms/sdk` (per-project).
 - Scaffold the client(s) the user wants:
   - **Delivery** — `ArchitectDelivery`, key `arch_delivery_…`.
@@ -81,8 +86,19 @@ Set up `@architectcms/sdk` in the user's app.
   ARCHITECT_DELIVERY_KEY=arch_delivery_…
   ARCHITECT_PREVIEW_KEY=arch_preview_…
   ```
-- Minimal usage snippet (fetch entries, image transforms, `withContext`) pulled from the SDK README.
 - Note management-client usage exists but app code should prefer delivery/preview keys.
+
+**2. Fetch content + hook it up** (depth: data layer + one wired example)
+- Detect the app framework (Next.js, Remix, plain React/Vite, Node, etc.) and follow its conventions.
+- Generate a **typed data-fetching layer** — small helper module(s) that instantiate the client from
+  env and expose functions like `getArticles()` / `getArticle(id)`. Use `architect-types` so the
+  helpers are type-safe against the schema.
+- **Verify** the fetch works (list a model's entries) before editing app code.
+- Wire **one representative spot** end-to-end as a copyable pattern (e.g. render a fetched entry in a
+  page/component), using **propose → confirm before editing the user's components**. The user extends
+  the rest from the pattern.
+- Use `withContext`, image transforms, and preview-vs-delivery selection where relevant, pulled from
+  the SDK README.
 
 ### New: `architect-extract`
 Analyze a project for hard-coded content and migrate it into the CMS. **propose → confirm → apply.**
