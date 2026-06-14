@@ -1,0 +1,14 @@
+{
+  "mcpServers": {
+    "architect-cms": {
+      "command": "npx",
+      "args": ["-y", "@architectcms/mcp"],
+      "env": {
+        "ARCHITECT_URL": "${user_config.architect_url}",
+        "ARCHITECT_API_KEY": "${user_config.architect_api_key}",
+        "ARCHITECT_ORG_ID": "${user_config.architect_org_id}",
+        "ARCHITECT_ENV_ID": "${user_config.architect_env_id}"
+      }
+    }
+  }
+}

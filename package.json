@@ -9,6 +9,6 @@
   "repository": { "type": "git", "url": "git+https://github.com/architectcms/architect-skills.git" },
   "homepage": "https://github.com/architectcms/architect-skills#readme",
   "bugs": "https://github.com/architectcms/architect-skills/issues",
-  "files": [".claude-plugin", "skills", "README.md", "LICENSE"],
+  "files": [".claude-plugin", "skills", ".mcp.json", "README.md", "LICENSE"],
   "publishConfig": { "access": "public" }
 }

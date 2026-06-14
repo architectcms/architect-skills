@@ -6,5 +6,33 @@
   "homepage": "https://github.com/architectcms/architect-skills",
   "repository": "https://github.com/architectcms/architect-skills",
   "license": "MIT",
-  "keywords": ["architect", "cms", "content", "headless"]
+  "keywords": ["architect", "cms", "content", "headless"],
+  "mcpServers": "./.mcp.json",
+  "userConfig": {
+    "architect_url": {
+      "type": "string",
+      "title": "Architect API URL",
+      "description": "Base URL of your Architect API.",
+      "default": "https://api.architectcms.com"
+    },
+    "architect_api_key": {
+      "type": "string",
+      "title": "Management API key (optional)",
+      "description": "Optional — leave blank to reuse your `architect login` credentials. Set an arch_mgmt_… key only to override the logged-in account.",
+      "sensitive": true,
+      "required": false
+    },
+    "architect_org_id": {
+      "type": "string",
+      "title": "Organization ID (optional)",
+      "description": "Optional — leave blank to reuse `architect login`. Override with an org_… id if needed.",
+      "required": false
+    },
+    "architect_env_id": {
+      "type": "string",
+      "title": "Environment ID (optional)",
+      "description": "Optional — leave blank to reuse `architect login`. Override with an env_… id. Switchable at runtime.",
+      "required": false
+    }
+  }
 }
