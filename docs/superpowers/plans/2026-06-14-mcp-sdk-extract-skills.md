@@ -71,9 +71,18 @@ The two are interchangeable for content operations; see `references/mcp-equivale
 
 > Requires `@architectcms/mcp` on npm. Until it is published, use the local path fallback at the bottom.
 
+## Credentials — shared with the CLI
+
+The MCP server reuses the CLI's login. It resolves credentials in this order:
+
+1. Environment variables (`ARCHITECT_API_KEY`, `ARCHITECT_ORG_ID`, `ARCHITECT_ENV_ID`, `ARCHITECT_URL`) — set by the plugin's config or a `.mcp.json`.
+2. Otherwise, the CLI's `~/.architect/credentials.json` (written by `architect login`).
+
+**So if you've already run `architect login` (see `architect-setup`), the MCP server works with no extra credentials** — you do not need to enter the key a second time. Only set the env vars when you want to override the logged-in account (e.g. a different environment for one project).
+
 ## Option A — Claude plugin (automatic)
 
-If you installed the `architect-cms` Claude plugin, the MCP server is **already bundled**. When you enable the plugin, Claude Code prompts for your Architect URL, **management** API key, organization id, and environment id (stored securely), then starts the server automatically. Nothing else to do — verify with `/mcp` and look for the `architect-cms` server.
+If you installed the `architect-cms` Claude plugin, the MCP server is **already bundled**. When you enable the plugin, Claude Code offers fields for your Architect URL, **management** API key, organization id, and environment id — **all optional**: leave them blank to reuse your `architect login` credentials, or fill them in to override. The server starts automatically; verify with `/mcp` and look for the `architect-cms` server.
 
 To reconfigure, re-run the plugin's configuration from `/plugin`.
 
@@ -101,7 +110,7 @@ Add an entry to your project `.mcp.json` (never commit a real key — use an env
 For Claude Desktop, use the same block under `mcpServers` in
 `~/Library/Application Support/Claude/claude_desktop_config.json`, but `npx` requires an absolute path or a shell wrapper there.
 
-The key is a **management** key (`arch_mgmt_…`) — the same kind the CLI uses. See `architect-setup`.
+The key is a **management** key (`arch_mgmt_…`) — the same kind the CLI uses. See `architect-setup`. If you've already run `architect login`, you can **omit the `env` block entirely** — the server falls back to `~/.architect/credentials.json`.
 
 ## Option C — Remote (future drop-in)
 
@@ -241,27 +250,27 @@ Add these keys to the existing object (keep current fields; bump version in Task
     },
     "architect_api_key": {
       "type": "string",
-      "title": "Management API key",
-      "description": "An arch_mgmt_… key from Settings → API Keys. Used by the MCP server.",
+      "title": "Management API key (optional)",
+      "description": "Optional — leave blank to reuse your `architect login` credentials. Set an arch_mgmt_… key only to override the logged-in account.",
       "sensitive": true,
       "required": false
     },
     "architect_org_id": {
       "type": "string",
-      "title": "Organization ID",
-      "description": "Your org id (org_…).",
+      "title": "Organization ID (optional)",
+      "description": "Optional — leave blank to reuse `architect login`. Override with an org_… id if needed.",
       "required": false
     },
     "architect_env_id": {
       "type": "string",
-      "title": "Environment ID",
-      "description": "Target environment id (env_…). Switchable at runtime.",
+      "title": "Environment ID (optional)",
+      "description": "Optional — leave blank to reuse `architect login`. Override with an env_… id. Switchable at runtime.",
       "required": false
     }
   }
 ```
 
-Note: fields are `required: false` so plugin users who only want the CLI skills are not blocked; the MCP server simply stays unconfigured until they fill them in.
+Note: every field is `required: false`. When blank, the env var is empty and the MCP server falls back to the CLI's `~/.architect/credentials.json` (see decision in the SDK plan's `config.js` change). So plugin users who already ran `architect login` get a working MCP server with zero extra input, and CLI-only users are never blocked.
 
 - [ ] **Step 3: Add `.mcp.json` to `package.json` `files`**
 
@@ -506,10 +515,10 @@ Different surfaces use different keys in different places:
 | Use | Key type | Location |
 | --- | --- | --- |
 | CLI | `arch_mgmt_…` | `~/.architect/credentials.json` via `architect login` |
-| MCP server | `arch_mgmt_…` | plugin `userConfig`, or `.mcp.json` env (`ARCHITECT_API_KEY`) — see `architect-mcp` |
+| MCP server | `arch_mgmt_…` | **Reuses the CLI's `~/.architect/credentials.json` automatically.** Override via plugin `userConfig` or `.mcp.json` env only if needed — see `architect-mcp` |
 | SDK (delivery/preview) | `arch_delivery_…` / `arch_preview_…` | project `.env` — see `architect-sdk` |
 
-Never commit a key. The CLI stores yours at `~/.architect/credentials.json` (0600).
+`architect login` configures both the CLI **and** the MCP server — you only set the management key once. Never commit a key. The CLI stores yours at `~/.architect/credentials.json` (0600).
 ```
 
 Then update the "Related skills" list to also reference `architect-sdk`, `architect-mcp`, and `architect-extract`.

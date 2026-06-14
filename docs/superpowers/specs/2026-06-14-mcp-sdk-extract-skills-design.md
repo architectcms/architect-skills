@@ -43,6 +43,7 @@ server. We want to:
 | 1 | **MCP = local stdio, bundled in the plugin.** The `architect-cms` plugin ships a `.mcp.json` running `npx -y @architectcms/mcp`. The skill documents the remote `type:http` config as a drop-in for a future hosted endpoint. **This depends on publishing the server to public npm (see decision #6) — until then the skill is non-functional for external users.** |
 | 6 | **Publish the MCP server to public npm.** Today it lives in the **private** `architect` repo (`services/mcp`, scope `@architect-cms/mcp`) and is unpublished, so no external user can install it. Move it to **`architect-sdk/packages/mcp`**, rename the scope to **`@architectcms/mcp`** (matching `cli`/`sdk`), wire it into the monorepo build/publish pipeline, and publish. Cross-repo prep (move + config) is in scope for this work; the actual `npm publish` is a manual step the maintainer runs. |
 | 7 | **Add `architect assets upload` to the CLI.** The CLI has no asset command; only the SDK's management client can upload (`POST /api/v2/assets/upload`). Add a thin CLI command in `architect-sdk/packages/cli` wrapping that capability, so `architect-extract` (and future skills) can upload assets while staying CLI-driven. Published with the CLI; same cross-repo + manual-publish caveat as #6. |
+| 8 | **CLI and MCP share one credential file.** The MCP server's `config.js` falls back to the CLI's `~/.architect/credentials.json` (same `{apiKey, organizationId, environmentId, baseUrl}` shape) when env vars are absent — env still wins for overrides. A single `architect login` configures both; the plugin `userConfig` fields become optional overrides, not a second setup. Code change lives in `architect-sdk/packages/mcp/config.js` (cross-repo, decision #6's package). |
 | 2 | **One `architect-sdk` skill** covering install + delivery and/or preview client scaffold + example `.env`. No separate delivery/preview skills (same package). |
 | 3 | **MCP-awareness via a shared reference.** A single `references/mcp-equivalents.md` maps CLI commands → MCP tools. Each of the 10 existing skills gets a **one-line pointer** to it. |
 | 4 | **`architect-extract` is propose → confirm → apply.** Scan, write proposed model + entry JSON locally for review, push only after approval. Never auto-mutates the CMS. |
@@ -138,7 +139,7 @@ Use these answers to bound the scan.
   | Use | Key type | Location |
   |-----|----------|----------|
   | CLI | `arch_mgmt_…` | `~/.architect/credentials.json` via `architect login` |
-  | MCP server | `arch_mgmt_…` | `.mcp.json` env (`ARCHITECT_API_KEY`) |
+  | MCP server | `arch_mgmt_…` | reuses the CLI's `~/.architect/credentials.json`; `.mcp.json`/userConfig env only to override (decision #8) |
   | SDK (delivery/preview) | `arch_delivery_…` / `arch_preview_…` | project `.env` |
 
 ### Changed: existing 10 skills (MCP retrofit)
