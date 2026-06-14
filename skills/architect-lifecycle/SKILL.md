@@ -63,3 +63,4 @@ See `references/examples.md` for more handlers (validation, denormalization, tim
 ## Related skills
 
 - `architect-models`, `architect-entries`
+- Prefer the CLI. If the Architect MCP server is installed (see `architect-mcp`), the equivalent tools are in `architect-mcp/references/mcp-equivalents.md`.

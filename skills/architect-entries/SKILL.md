@@ -70,3 +70,4 @@ When pulling, related entries the server has resolved appear under `resolvedRela
 ## Related skills
 
 - `architect-models`, `architect-context` (locale/segment-aware content)
+- Prefer the CLI. If the Architect MCP server is installed (see `architect-mcp`), the equivalent tools are in `architect-mcp/references/mcp-equivalents.md`.

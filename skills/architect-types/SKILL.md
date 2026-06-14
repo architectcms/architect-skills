@@ -28,3 +28,4 @@ This fetches every model in the current environment and writes one `export inter
 ## Related skills
 
 - `architect-models`
+- Prefer the CLI. If the Architect MCP server is installed (see `architect-mcp`), the equivalent tools are in `architect-mcp/references/mcp-equivalents.md`.

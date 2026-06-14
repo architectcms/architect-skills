@@ -48,6 +48,18 @@ org=org_xxxxxxxx env=development baseUrl=https://api.architectcms.com (key valid
 
 If `whoami` says "Not logged in", run `architect login` again.
 
+## Where your API key goes
+
+Different surfaces use different keys in different places:
+
+| Use | Key type | Location |
+| --- | --- | --- |
+| CLI | `arch_mgmt_…` | `~/.architect/credentials.json` via `architect login` |
+| MCP server | `arch_mgmt_…` | **Reuses the CLI's `~/.architect/credentials.json` automatically.** Override via plugin `userConfig` or `.mcp.json` env only if needed — see `architect-mcp` |
+| SDK (delivery/preview) | `arch_delivery_…` / `arch_preview_…` | project `.env` — see `architect-sdk` |
+
+`architect login` configures both the CLI **and** the MCP server — you only set the management key once. Never commit a key. The CLI stores yours at `~/.architect/credentials.json` (0600).
+
 ## Tips
 
 - Self-hosted? Pass `--base-url https://your-host` to `login` (default is `https://api.architectcms.com`).
@@ -58,3 +70,6 @@ If `whoami` says "Not logged in", run `architect login` again.
 
 - `architect-models` — define content models
 - `architect-entries` — create/update content
+- `architect-sdk` — read CMS content from an application
+- `architect-mcp` — operate on content via MCP tools instead of the CLI
+- `architect-extract` — migrate hard-coded app content into the CMS

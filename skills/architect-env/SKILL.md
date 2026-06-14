@@ -42,3 +42,4 @@ architect login --environment-id <id>
 ## Related skills
 
 - `architect-setup`, `architect-models`
+- Prefer the CLI. If the Architect MCP server is installed (see `architect-mcp`), the equivalent tools are in `architect-mcp/references/mcp-equivalents.md`.

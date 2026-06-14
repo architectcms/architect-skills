@@ -76,3 +76,4 @@ See `references/field-types.md` for every field type (`text`, `richtext`, `numbe
 ## Related skills
 
 - `architect-entries`, `architect-context`, `architect-types`
+- Prefer the CLI. If the Architect MCP server is installed (see `architect-mcp`), the equivalent tools are in `architect-mcp/references/mcp-equivalents.md`.
