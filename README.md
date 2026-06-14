@@ -46,6 +46,9 @@ Copy a `skills/<name>/` folder into your agent's skills directory (`.claude/skil
 | architect-lifecycle | Model lifecycle functions |
 | architect-webhooks | Webhooks |
 | architect-env | Environments |
+| architect-sdk | Install the SDK, fetch content + wire it into an app |
+| architect-mcp | Install/configure the Architect MCP server for content access |
+| architect-extract | Migrate hard-coded app content into the CMS |
 
 ## License
 

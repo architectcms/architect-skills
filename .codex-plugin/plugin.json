@@ -1,7 +1,7 @@
 {
   "name": "architect-cms",
-  "version": "0.2.0",
-  "description": "Manage Architect CMS from Codex — models, entries, types, localization, context, lifecycle, webhooks, and environments via the architect CLI.",
+  "version": "0.3.0",
+  "description": "Manage Architect CMS from Codex — models, entries, types, localization, context, lifecycle, webhooks, environments, SDK setup, MCP access, and content extraction via the architect CLI.",
   "author": { "name": "Architect CMS" },
   "homepage": "https://github.com/architectcms/architect-skills",
   "repository": "https://github.com/architectcms/architect-skills",

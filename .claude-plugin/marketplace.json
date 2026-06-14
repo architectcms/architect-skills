@@ -7,8 +7,8 @@
     {
       "name": "architect-cms",
       "source": ".",
-      "description": "Models, entries, types, localization, context, lifecycle, webhooks, and environments for Architect CMS.",
-      "version": "0.2.0",
+      "description": "Models, entries, types, localization, context, lifecycle, webhooks, environments, SDK setup, MCP access, and content extraction for Architect CMS.",
+      "version": "0.3.0",
       "license": "MIT"
     }
   ]
